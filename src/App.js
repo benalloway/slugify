@@ -12,7 +12,10 @@ class Slugify extends React.Component {
 
 
       this.setInput = this.setInput.bind(this)
+      this.resetInput = this.resetInput.bind(this) // took me a min to remember to add this for the reset button to work.
     }
+
+
 
     setInput(event) {
       this.setState({
@@ -22,14 +25,14 @@ class Slugify extends React.Component {
       }) 
     }
 
-// Ben's RESET BUTTON
-    // resetInput(event) {
-    //   this.setState({
+// Ben's RESET BUTTON - after reading REACT's docs for an hour i figured out how to use setState to do this.
+    resetInput() {
+      this.setState({
 
-    //     input: '',
-    //     output: ''
-    //   })
-    // }
+        input: '',
+        output: ''
+      })
+    }
 
     render() {
       return(
