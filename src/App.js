@@ -7,12 +7,14 @@ class Slugify extends React.Component {
 
       this.state = {
         input: '',
-        output: ''
+        output: '',
+        saved: []
       }
 
 
       this.setInput = this.setInput.bind(this)
       this.resetInput = this.resetInput.bind(this) // took me a min to remember to add this for the reset button to work.
+      this.saveInput = this.saveInput.bind(this)
     }
 
 
@@ -34,6 +36,17 @@ class Slugify extends React.Component {
       })
     }
 
+
+// Ben's Save Button
+    saveInput() {
+      this.setState({
+
+        input: '',
+        output: '',
+        saved: this.state.saved.concat(this.state.output)
+      })
+    }
+
     render() {
       return(
           <div>
@@ -48,12 +61,23 @@ class Slugify extends React.Component {
               className="reset"
               onClick={this.resetInput}
             > 
-              RESET ME
+              RESET ALL
+            </button>
+
+            <button
+              className="save"
+              onClick={this.saveInput}
+            >
+            SAVE ME
             </button>
 
             <br />
 
             <div>{this.state.output}</div>
+
+            <br />
+
+            <div className="test">{this.state.saved}</div>
           </div>
         )
     }
