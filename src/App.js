@@ -8,12 +8,12 @@ class Slugify extends React.Component {
       this.state = {
         input: '',
         output: '',
-        saved: []
+        saved: [] // saved is an array, to store all the saved events
       }
 
 
       this.setInput = this.setInput.bind(this)
-      this.resetInput = this.resetInput.bind(this) // took me a min to remember to add this for the reset button to work.
+      this.resetInput = this.resetInput.bind(this)
       this.saveInput = this.saveInput.bind(this)
     }
 
@@ -27,7 +27,7 @@ class Slugify extends React.Component {
       }) 
     }
 
-// Ben's RESET BUTTON - after reading REACT's docs for an hour i figured out how to use setState to do this.
+// Ben's RESET BUTTON
     resetInput() {
       this.setState({
 
@@ -43,9 +43,10 @@ class Slugify extends React.Component {
 
         input: '',
         output: '',
-        saved: this.state.saved.concat(this.state.output)
+        saved: this.state.saved.concat(this.state.output) // had to use concat, because push just shows length of array instead of showing contents
       })
     }
+
 
     render() {
       return(
@@ -77,7 +78,7 @@ class Slugify extends React.Component {
 
             <br />
 
-            <div className="test">{this.state.saved}</div>
+            <div>{this.state.saved}</div>
           </div>
         )
     }
