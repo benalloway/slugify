@@ -1,5 +1,6 @@
 import React from 'react';
 import slug from 'slug';
+import './App.css';
 
 class Slugify extends React.Component {
     constructor(props) {
@@ -78,7 +79,9 @@ class Slugify extends React.Component {
 
             <br />
 
-            <div>{this.state.saved}</div>
+            <div>{this.state.saved.map((savedSlug) => (
+              <div className="saved-slug">{savedSlug}</div>
+              ))}</div>
           </div>
         )
     }
