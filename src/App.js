@@ -1,5 +1,6 @@
 import React from 'react';
 import slug from 'slug';
+import * as RBS from 'react-bootstrap';
 import './App.css';
 
 class Slugify extends React.Component {
@@ -51,38 +52,46 @@ class Slugify extends React.Component {
 
     render() {
       return(
-          <div>
-            <input 
-              onChange={this.setInput}
-              value={this.state.input}
-            />
-
-            <br />
-
-            <button
-              className="reset"
-              onClick={this.resetInput}
-            > 
-              RESET ALL
-            </button>
-
-            <button
-              className="save"
-              onClick={this.saveInput}
-            >
-            SAVE ME
-            </button>
-
-            <br />
-
-            <div>{this.state.output}</div>
+          <RBS.Grid>
+            <RBS.Row>
+              <RBS.Col md={6} mdOffset={3}>
+                <RBS.Col xs={12}>  
+                  <input 
+                    onChange={this.setInput}
+                    value={this.state.input}
+                  />
+                </RBS.Col>  
+                
+                <RBS.Col sm={6}>  
+                  <button
+                    className="reset"
+                    onClick={this.resetInput}
+                  > 
+                    RESET ALL
+                  </button>
+                </RBS.Col>    
+                
+                <RBS.Col sm={6}>    
+                  <button
+                    className="save"
+                    onClick={this.saveInput}
+                  >
+                  SAVE ME
+                  </button>
+                </RBS.Col>  
+                
+                <RBS.Col xs={12}>  
+                  <div>{this.state.output}</div>
+                </RBS.Col>  
+            </RBS.Col>
 
             <br />
 
             <div>{this.state.saved.map((savedSlug) => (
-              <div className="saved-slug">{savedSlug}</div>
+              <div className="">{savedSlug}</div>
               ))}</div>
-          </div>
+            </RBS.Row>
+          </RBS.Grid>
         )
     }
 }

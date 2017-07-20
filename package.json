@@ -6,7 +6,8 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-scripts": "1.0.10",
-    "slug": "^0.9.1"
+    "slug": "^0.9.1",
+    "react-bootstrap": "*"
   },
   "scripts": {
     "start": "react-scripts start",
