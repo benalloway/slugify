@@ -17,9 +17,26 @@ class Slugify extends React.Component {
       this.setInput = this.setInput.bind(this)
       this.resetInput = this.resetInput.bind(this)
       this.saveInput = this.saveInput.bind(this)
+      this.resetSlugs = this.resetSlugs.bind(this)
     }
 
+    componentDidUpdate(prevProps, prevState) {
 
+      if(this.state.saved.length > prevState.saved.length){
+        window.localStorage.setItem("savedSlugs", JSON.stringify(this.state.saved))
+      }
+
+    }
+
+    componentDidMount() {
+
+      if(window.localStorage.getItem("savedSlugs")){
+        this.setState({
+          saved: JSON.parse(window.localStorage.getItem("savedSlugs"))
+        });
+      }
+
+    }
 
     setInput(event) {
       this.setState({
@@ -41,12 +58,30 @@ class Slugify extends React.Component {
 
 // Ben's Save Button
     saveInput() {
+      console.log(this.state.saved);
       this.setState({
 
         input: '',
         output: '',
         saved: this.state.saved.concat(this.state.output) // had to use concat, because push just shows length of array instead of showing contents
-      })
+      });
+      
+      
+
+    }
+
+    // reset all button
+    /*eslint no-restricted-globals: 0*/
+    resetSlugs() {
+      if(confirm("Are you sure you want to delete your pet slugs?")) {
+        if(process.env.NODE_ENV == "development" && confirm("Are you SUUUUUUUUUUUREEEEEE??")) {
+          window.localStorage.clear();
+
+          this.setState({saved: []})
+        }
+      }
+
+
     }
 
 
@@ -81,7 +116,7 @@ class Slugify extends React.Component {
                     className="reset"
                     onClick={this.resetInput}
                   > 
-                    RESET ALL
+                    CLEAR
                   </RBS.Button>
                 
                 </RBS.Col>    
@@ -96,7 +131,19 @@ class Slugify extends React.Component {
                   SAVE ME
                   </RBS.Button>
                 
-                </RBS.Col>  
+                </RBS.Col>
+
+                <RBS.Col sm={12}>  
+
+                  {this.state.saved.length > 0 && <RBS.Button                     
+                    block
+                    className="resetSlugs"
+                    onClick={this.resetSlugs}
+                  > 
+                    DELETE SAVED
+                  </RBS.Button>}
+                
+                </RBS.Col>                  
                 
                 <RBS.Col xs={12}>  
             
