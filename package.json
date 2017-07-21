@@ -4,10 +4,11 @@
   "private": true,
   "dependencies": {
     "react": "^15.6.1",
+    "react-bootstrap": "*",
     "react-dom": "^15.6.1",
     "react-scripts": "1.0.10",
-    "slug": "^0.9.1",
-    "react-bootstrap": "*"
+    "react-shortcut": "^1.0.6",
+    "slug": "^0.9.1"
   },
   "scripts": {
     "start": "react-scripts start",
