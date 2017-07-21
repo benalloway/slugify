@@ -101,9 +101,9 @@ class Slugify extends React.Component {
       try {
           var successful = document.execCommand('copy');
           var msg = successful ? 'COPIED TO CLIPBOARD!' : 'SORRY, SOMETHING WENT WRONG...';          
-          this.onCopySuccess(msg);
-        } catch (err) {
-          throw err;
+          this.onCopySuccess(msg);          
+        } catch (err) {          
+          console.error(err);
         }
     }
 
