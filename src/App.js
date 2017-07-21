@@ -2,6 +2,7 @@ import React from 'react';
 import slug from 'slug';
 import * as RBS from 'react-bootstrap';
 import './App.css';
+import HotKey from 'react-shortcut';
 
 class Slugify extends React.Component {
     constructor(props) {
@@ -10,7 +11,9 @@ class Slugify extends React.Component {
       this.state = {
         input: '',
         output: '',
-        saved: [] // saved is an array, to store all the saved events
+        saved: [], // saved is an array, to store all the saved events
+        alertMessage: '',
+        isAlertOpen: false
       }
 
 
@@ -18,6 +21,8 @@ class Slugify extends React.Component {
       this.resetInput = this.resetInput.bind(this)
       this.saveInput = this.saveInput.bind(this)
       this.resetSlugs = this.resetSlugs.bind(this)
+      this.copyCurrent = this.copyCurrent.bind(this)
+      this.onCopySuccess = this.onCopySuccess.bind(this)
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -58,7 +63,7 @@ class Slugify extends React.Component {
 
 // Ben's Save Button
     saveInput() {
-      console.log(this.state.saved);
+     
       this.setState({
 
         input: '',
@@ -74,7 +79,7 @@ class Slugify extends React.Component {
     /*eslint no-restricted-globals: 0*/
     resetSlugs() {
       if(confirm("Are you sure you want to delete your pet slugs?")) {
-        if(process.env.NODE_ENV == "development" && confirm("Are you SUUUUUUUUUUUREEEEEE??")) {
+        if(process.env.NODE_ENV === "development" && confirm("Are you SUUUUUUUUUUUREEEEEE??")) {
           window.localStorage.clear();
 
           this.setState({saved: []})
@@ -84,12 +89,46 @@ class Slugify extends React.Component {
 
     }
 
+    // HOT COPY
+
+    copyCurrent() {
+      var range = document.createRange();
+          range.selectNodeContents(this.copyTextarea);
+          var sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+
+      try {
+          var successful = document.execCommand('copy');
+          var msg = successful ? 'COPIED TO CLIPBOARD!' : 'SORRY, SOMETHING WENT WRONG...';          
+          this.onCopySuccess(msg);
+        } catch (err) {
+          throw err;
+        }
+    }
+
+    onCopySuccess(msg) {
+      this.setState({
+        alertMessage: msg,
+        isAlertOpen: true
+      });
+      setTimeout(() => {
+        this.setState({
+          alertMessage: msg,
+          isAlertOpen: false
+        });
+      }, 2000);
+    }
+
+
 
     render() {
       return(
           <RBS.Grid className="text-center">
             <RBS.Row>
               <RBS.Col md={6} mdOffset={3}>
+
+                {this.state.isAlertOpen && <div>{this.state.alertMessage}</div>}
 
                 <RBS.Col xs={12}>  
 
@@ -147,7 +186,7 @@ class Slugify extends React.Component {
                 
                 <RBS.Col xs={12}>  
             
-                  <div>{this.state.output}</div>
+                  <div ref={ref => this.copyTextarea = ref}>{this.state.output}</div>
             
                 </RBS.Col>  
             
@@ -160,9 +199,26 @@ class Slugify extends React.Component {
                   </RBS.ListGroup>
                 </RBS.Col>
 
+                <div>
+                  {/*instructions on copy function*/}
+                </div>
+
             </RBS.Col>     
+
             
             </RBS.Row>
+          {/*HOT COPY*/}
+            <HotKey
+                    keys={["meta", "c"]}
+                    simultaneous
+                    onKeysCoincide={this.copyCurrent}
+                />
+
+            <HotKey
+                    keys={["control", "c"]}
+                    simultaneous
+                    onKeysCoincide={this.copyCurrent}
+                />    
           </RBS.Grid>
         )
     }
