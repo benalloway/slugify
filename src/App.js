@@ -25,6 +25,7 @@ class Slugify extends React.Component {
       this.onCopySuccess = this.onCopySuccess.bind(this)
     }
 
+// saves slugs to local memory onclick save button
     componentDidUpdate(prevProps, prevState) {
 
       if(this.state.saved.length > prevState.saved.length){
@@ -37,6 +38,7 @@ class Slugify extends React.Component {
 
     }
 
+// this pulls saved slugs from locale memory if ther are ones
     componentDidMount() {
 
       if(window.localStorage.getItem("savedSlugs")){
@@ -47,6 +49,7 @@ class Slugify extends React.Component {
 
     }
 
+// Show output through slug while input is being typed
     setInput(event) {
       this.setState({
 
@@ -79,7 +82,8 @@ class Slugify extends React.Component {
 
     }
 
-    // reset all button
+    // Ben's Reset All Button
+
     /*eslint no-restricted-globals: 0*/
     resetSlugs() {
       if(confirm("Are you sure you want to delete your pet slugs?")) {
@@ -93,7 +97,7 @@ class Slugify extends React.Component {
 
     }
 
-    // HOT COPY
+    // HOT COPY FUNCTION
 
     copyCurrent() {
       var range = document.createRange();
@@ -111,6 +115,7 @@ class Slugify extends React.Component {
         }
     }
 
+    // HOT COPY SUCCESS MESSAGE
     onCopySuccess(msg) {
       this.setState({
         alertMessage: msg,
@@ -132,8 +137,11 @@ class Slugify extends React.Component {
             <RBS.Row>
               <RBS.Col md={6} mdOffset={3}>
 
+
+                {/* SAVED TO CLIPBOARD NOTIFICATION - ONLY APPEARS WHEN cmd+C or CTRL+C are pressed */}
                 {this.state.isAlertOpen && <div>{this.state.alertMessage}</div>}
 
+                {/* LOGO  */}
                 <RBS.Col xs={12}>  
 
                   <svg id="Layer_1" style={{"enableBackground":"new 0 0 30 30", "width":"50%" , "maxWidth":"275px"}} version="1.1" viewBox="0 0 30 30" x="0px" y="0px" xmlSpace="preserve">
@@ -142,6 +150,8 @@ class Slugify extends React.Component {
 
                 </RBS.Col>
 
+
+               {/* INPUT TEXT-BAR */}
                 <RBS.Col xs={12}>  
 
                   <RBS.FormControl                          
@@ -151,12 +161,17 @@ class Slugify extends React.Component {
                   />
 
                 </RBS.Col>  
+
+                <br />
+
+              {/* CLEAR AND SAVE BUTTON*/}
                 
                  <RBS.Clearfix/> 
-                  <RBS.Col sm={6}>  
+                  <RBS.Col xs={6} id="button-column">  
 
                     <RBS.Button 
                       block
+                      id="button"
                       className="reset"
                       onClick={this.resetInput}
                     > 
@@ -165,37 +180,34 @@ class Slugify extends React.Component {
                   
                   </RBS.Col>    
                   
-                  <RBS.Col sm={6}>    
+                  <RBS.Col xs={6} id="button-column">    
 
                     <RBS.Button
                       block
+                      id="button"
                       className="save"
                       onClick={this.saveInput}
                     >
-                    SAVE ME
+                    SAVE
                     </RBS.Button>
                   
-                  </RBS.Col>
-
-                <RBS.Col sm={12}>  
-
-                  {this.state.saved.length > 0 && <RBS.Button                     
-                    block
-                    className="resetSlugs"
-                    onClick={this.resetSlugs}
-                  > 
-                    DELETE SAVED
-                  </RBS.Button>}
+                  </RBS.Col>                     
                 
-                </RBS.Col>                  
-                
+                <div>
+                  {/*OPTIONAL INSTRUCTIONS ON COPY FUNCTION*/}                              
+                </div>
+
+                {/* OUTPUT SECTION */}
                 <RBS.Col xs={12}>  
             
-                  <div ref={ref => this.copyTextarea = ref}>{this.state.output}</div>
+                  <div ref={ref => this.copyTextarea = ref}><h3>{this.state.output}</h3></div>
             
                 </RBS.Col>  
+          
+
+                {/* THIS IS THE SAVED SLUGS*/}
             
-                <RBS.Col xs={12}>
+                <RBS.Col xs={12} id="saved-slugs">
                   <RBS.ListGroup>
                     {this.state.saved.map((savedSlug, idx) => (                  
                     <RBS.ListGroupItem key={idx}>
@@ -204,15 +216,26 @@ class Slugify extends React.Component {
                   </RBS.ListGroup>
                 </RBS.Col>
 
-                <div>
-                  {/*instructions on copy function*/}
-                </div>
+
+                  {/* DELETE SAVED SLUGS BUTTON - ONLY APPEARS WHEN THERE ARE SAVED SLUGS*/}
+                <RBS.Col sm={12}>  
+
+                  {this.state.saved.length > 0 && <RBS.Button                     
+                    
+                    id="button-clearAll"
+                    className="resetSlugs"
+                    onClick={this.resetSlugs}
+                  > 
+                    DELETE PET SLUGS
+                  </RBS.Button>}
+                
+                </RBS.Col>           
 
             </RBS.Col>     
 
             
             </RBS.Row>
-          {/*HOT COPY*/}
+          {/*HOT COPY function for both MAC and PC*/}
             <HotKey
                     keys={["meta", "c"]}
                     simultaneous
