@@ -9,6 +9,8 @@ class Slugify extends React.Component {
     constructor(props) {
       super(props)
 
+      slug.charmap['$'] = '';
+
       this.state = {
         input: '',
         output: '',
