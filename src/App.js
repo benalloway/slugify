@@ -229,7 +229,11 @@ class Slugify extends React.Component {
                 {/* OUTPUT SECTION */}
                 <RBS.Col xs={12}>
 
-                  <div ref={ref => this.copyTextarea = ref}><h3>{this.state.output}</h3></div>
+                  <div ref={ref => this.copyTextarea = ref}>
+                    <h3 className="slugifyOutput">
+                      {this.state.output}
+                    </h3>
+                  </div>
 
                 </RBS.Col>
 
