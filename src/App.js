@@ -98,12 +98,16 @@ class Slugify extends React.Component {
 
     /*eslint no-restricted-globals: 0*/
     resetSlugs() {
-      if(confirm("Are you sure you want to delete your pet slugs?")) {
-        if(process.env.NODE_ENV === "development" && confirm("Are you SUUUUUUUUUUUREEEEEE??")) {
-          window.localStorage.clear();
+      let shouldClear = confirm("Are you sure you want to delete your pet slugs?");
 
-          this.setState({saved: []})
-        }
+      if (shouldClear && process.env.NODE_ENV === "development") {
+        // we're in dev, so base the clearing off the result of the confirm dialog
+        shouldClear = confirm("Are you SUUUUUUUUUUUREEEEEE??");
+      }
+
+      if (shouldClear) {
+        window.localStorage.clear();
+        this.setState({saved: []});
       }
 
       this.giveInputFocus();
