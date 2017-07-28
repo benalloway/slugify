@@ -118,7 +118,10 @@ class Slugify extends React.Component {
     // HOT COPY FUNCTION
 
     copyCurrent() {
-      var range = document.createRange();
+          if(this.input !== document.activeElement) {
+            return;
+          }
+          var range = document.createRange();
           range.selectNodeContents(this.copyTextarea);
           var sel = window.getSelection();
           sel.removeAllRanges();
@@ -155,10 +158,6 @@ class Slugify extends React.Component {
             <RBS.Row>
               <RBS.Col md={6} mdOffset={3}>
 
-
-                {/* SAVED TO CLIPBOARD NOTIFICATION - ONLY APPEARS WHEN cmd+C or CTRL+C are pressed */}
-                {this.state.isAlertOpen && <div>{this.state.alertMessage}</div>}
-
                 {/* LOGO  */}
                 <RBS.Col xs={12}>
 
@@ -184,6 +183,10 @@ class Slugify extends React.Component {
                         inputRef={ref => this.input = ref}
                         bsSize="large"
                       />
+                      {/* SAVED TO CLIPBOARD NOTIFICATION - ONLY APPEARS WHEN cmd+C or CTRL+C are pressed */}
+                      {this.state.isAlertOpen && <RBS.InputGroup.Addon>
+                        {this.state.alertMessage}
+                      </RBS.InputGroup.Addon>}
 
                     </RBS.InputGroup>
 
@@ -201,7 +204,6 @@ class Slugify extends React.Component {
                       id="button"
                       className="reset"
                       onClick={this.resetInput}
-                      bsStyle="danger"
                     >
                       CLEAR
                     </RBS.Button>
@@ -215,7 +217,6 @@ class Slugify extends React.Component {
                       id="button"
                       className="save"
                       onClick={this.saveInput}
-                      bsStyle="primary"
                     >
                     SAVE
                     </RBS.Button>
