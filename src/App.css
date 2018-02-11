@@ -1,0 +1,13 @@
+body {
+	padding-top: 10vh;
+}
+
+#button {
+	margin: 0 auto;
+	width: 33%;
+
+}
+
+.slugifyOutput {
+    min-height: 2.5rem;
+}
